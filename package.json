@@ -1,5 +1,5 @@
 {
-  "name": "sortablejs",
+  "name": "byted-sortablejs",
   "exportName": "Sortable",
   "version": "1.6.0",
   "devDependencies": {

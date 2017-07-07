@@ -907,7 +907,7 @@
           var oriP = {
             x: 0,
             y: 0
-          }
+          };
           if(transform){
             // alert(transform);
             transform = transform.replace(/translate3d/g, '').match(/[\-\.\d]+/g);
