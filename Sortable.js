@@ -228,6 +228,7 @@
 		this.el = el; // root element
 		this.options = options = _extend({}, options);
 
+		this.animateBackInFlag = false;
 
 		// Export instance
 		el[expando] = this;
@@ -895,6 +896,35 @@
 					!options.dropBubble && evt.stopPropagation();
 				}
 
+				if(ghostEl && dragEl && this.options.animation && !this.animateBackInFlag) {
+          var firstP = ghostEl.getBoundingClientRect();
+          var lastP = dragEl.getBoundingClientRect();
+          var offset = {
+            top: lastP.top - firstP.top,
+            left: lastP.left - firstP.left
+          };
+          var transform = ghostEl.style.transform || ghostEl.style.webkitTransform;
+          var oriP = {
+            x: 0,
+            y: 0
+          }
+          if(transform){
+            // alert(transform);
+            transform = transform.replace(/translate3d/g, '').match(/[\-\.\d]+/g);
+
+            oriP.x = Number(transform[0]) + offset.left;
+            oriP.y = Number(transform[1]) + offset.top;
+          }
+          this.animateBackInFlag = true;
+          ghostEl.style.transition = 'transform '+this.options.animation+'ms';
+          ghostEl.style.transform = 'translate('+oriP.x+'px,'+oriP.y+'px)';
+          var self = this;
+          setTimeout(function () {
+            self._onDrop(evt);
+          },this.options.animation);
+          return;
+        }
+        this.animateBackInFlag = false;
 				ghostEl && ghostEl.parentNode && ghostEl.parentNode.removeChild(ghostEl);
 
 				if (rootEl === parentEl || Sortable.active.lastPullMode !== 'clone') {
@@ -913,6 +943,7 @@
 					// Remove class's
 					_toggleClass(dragEl, this.options.ghostClass, false);
 					_toggleClass(dragEl, this.options.chosenClass, false);
+
 
 					// Drag stop event
 					_dispatchEvent(this, rootEl, 'unchoose', dragEl, rootEl, oldIndex);
@@ -1067,7 +1098,9 @@
 		 * Save the current sorting
 		 */
 		save: function () {
+
 			var store = this.options.store;
+
 			store && store.set(this);
 		},
 
@@ -1439,7 +1472,7 @@
 		}
 	}
 
-	// Fixed #973: 
+	// Fixed #973:
 	_on(document, 'touchmove', function (evt) {
 		if (Sortable.active) {
 			evt.preventDefault();

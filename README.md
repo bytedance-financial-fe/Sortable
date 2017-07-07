@@ -3,6 +3,8 @@ Sortable is a <s>minimalist</s> JavaScript library for reorderable drag-and-drop
 
 Demo: http://rubaxa.github.io/Sortable/
 
+drag之后 el不直接消失，有一个回到新位置的过度动画，
+
 
 ## Features
 
