@@ -49,6 +49,7 @@
 	Sortable.create(byId('foo'), {
 		group: "words",
 		animation: 150,
+    onlyVertical: true,
 		store: {
 			get: function (sortable) {
 				var order = localStorage.getItem(sortable.options.group);

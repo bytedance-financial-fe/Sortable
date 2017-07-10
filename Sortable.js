@@ -561,9 +561,11 @@
 					fallbackOffset = options.fallbackOffset,
 					touch = evt.touches ? evt.touches[0] : evt,
 					dx = (touch.clientX - tapEvt.clientX) + fallbackOffset.x,
-					dy = (touch.clientY - tapEvt.clientY) + fallbackOffset.y,
-					translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
-
+					dy = (touch.clientY - tapEvt.clientY) + fallbackOffset.y;
+          if (options.onlyVertical) {
+            dx = 0;
+          }
+					var translate3d = evt.touches ? 'translate3d(' + dx + 'px,' + dy + 'px,0)' : 'translate(' + dx + 'px,' + dy + 'px)';
 				// only set the status to dragging, when we are actually dragging
 				if (!Sortable.active) {
 					if (fallbackTolerance &&
