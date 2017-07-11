@@ -499,7 +499,7 @@
 				// Apply effect
 				_toggleClass(dragEl, options.ghostClass, true);
 				_toggleClass(dragEl, options.dragClass, false);
-
+        
 				Sortable.active = this;
 
 				// Drag start event
@@ -889,6 +889,7 @@
 				_off(document, 'drop', this);
 				_off(el, 'dragstart', this._onDragStart);
 			}
+      _toggleClass(dragEl, this.options.dragClass, false);
 
 			this._offUpEvents();
 
